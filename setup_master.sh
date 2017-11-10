@@ -1,6 +1,6 @@
 #/bin/sh
 
-apt-get update ; apt-get -y install curl git lsof ; apt-get clean ; 
+apt-get update ; apt-get -y install curl git lsof lvm2 glusterfs-server; apt-get clean ; 
 curl -sSL https://get.docker.com | sh ; 
 
 curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
