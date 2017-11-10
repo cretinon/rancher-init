@@ -35,11 +35,11 @@ git clone https://github.com/cretinon/rancher-init.git
 mkdir -p /docker/nginx-proxy/ssl
 mkdir -p /docker/nginx-proxy/vhost.d
 mkdir -p /docker/nginx-proxy/html 
-cd /docker/git_clone/nginx
+cd /docker/git_clone/rancher-init/nginx
 docker-compose pull
 docker-compose up -d
 
 mkdir -p /docker/rancher-server/mysql
-cd /docker/git_clone/rancher
+cd /docker/git_clone/rancher-init/rancher
 docker-compose pull
 docker-compose up -d
