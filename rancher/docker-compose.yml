@@ -1,0 +1,9 @@
+rancher-server:
+  image: rancher/server:latest
+  environment:
+    VIRTUAL_PORT: 8080
+    VIRTUAL_HOST: vps3.cretinon.fr
+    LETSENCRYPT_HOST: vps3.cretinon.fr
+    LETSENCRYPT_EMAIL: jacques@cretinon.fr
+  volumes:
+    - '/docker/rancher-server/mysql:/var/lib/mysql:rw'
