@@ -23,8 +23,10 @@ mount /glusterfs
 mkdir /docker
 gluster volume create docker replica 2 transport tcp vps3.cretinon.fr:/glusterfs/$VOL vps4.cretinon.fr:/glusterfs/$VOL force
 while [ $? -eq 1 ]; do sleep 10 ; gluster volume create docker replica 2 transport tcp vps3.cretinon.fr:/glusterfs/$VOL vps4.cretinon.fr:/glusterfs/$VOL force ; done
+gluster volume start docker
 echo "localhost:/docker /docker glusterfs defaults,_netdev 0 0" >> /etc/fstab
 mount /docker
+while [ $? -eq 1 ]; do sleep 10 ; mount /docker ; done
 
 mkdir -p /docker/git_clone
 cd /docker/git_clone
