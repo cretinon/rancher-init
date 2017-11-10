@@ -31,6 +31,7 @@ while [ $? -eq 1 ]; do sleep 10 ; mount /docker ; done
 mkdir -p /docker/git_clone
 cd /docker/git_clone
 git clone https://github.com/cretinon/rancher-init.git
+git clone https://github.com/rancher/compose-templates.git
 
 mkdir -p /docker/nginx-proxy/ssl
 mkdir -p /docker/nginx-proxy/vhost.d
