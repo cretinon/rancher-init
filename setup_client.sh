@@ -15,3 +15,4 @@ mkdir /docker
 gluster peer probe vps3.cretinon.fr
 echo "localhost:/docker /docker glusterfs defaults,_netdev 0 0" >> /etc/fstab
 mount /docker
+while [ $? -eq 1 ]; do sleep 10 ; mount /docker ; done
