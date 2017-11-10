@@ -1,0 +1,17 @@
+nginx-proxy:
+  image: jwilder/nginx-proxy:latest
+  ports:
+   - "80:80"
+   - "443:443"
+  volumes:
+    - '/docker/nginx-proxy/ssl:/etc/nginx/certs:ro'
+    - '/docker/nginx-proxy/vhost.d:/etc/nginx/vhost.d'
+    - '/docker/nginx-proxy/html:/usr/share/nginx/html'
+    - '/var/run/docker.sock:/tmp/docker.sock:ro'
+letsencrypt-nginx-proxy-companion:
+  image: jrcs/letsencrypt-nginx-proxy-companion:latest
+  volumes_from:
+    - nginx-proxy
+  volumes:
+    - '/docker/nginx-proxy/ssl:/etc/nginx/certs:rw'
+    - '/var/run/docker.sock:/var/run/docker.sock:ro'
