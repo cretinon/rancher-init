@@ -1,16 +1,15 @@
 #/bin/sh
 
+dd if=/dev/zero of=/swap bs=1024 count=1024000
+mkswap -c /swap 1024000
+chmod 0600 /swap
+swapon /swap
+
 apt-get update ; apt-get -y install curl git lsof lvm2 glusterfs-server; apt-get clean ; 
 curl -sSL https://get.docker.com | sh ; 
 
 curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
-
-mkdir -p /docker/nginx-proxy/ssl
-mkdir -p /docker/nginx-proxy/vhost.d
-mkdir -p /docker/nginx-proxy/html
-mkdir -p /docker/rancher-server/mysql
-mkdir -p /docker/share
 
 mkdir -p /glusterfs
 pvcreate -ff -y  /dev/sdb
@@ -33,14 +32,18 @@ cd /docker/git_clone
 git clone https://github.com/cretinon/rancher-init.git
 git clone https://github.com/rancher/compose-templates.git
 
-mkdir -p /docker/nginx-proxy/ssl
-mkdir -p /docker/nginx-proxy/vhost.d
-mkdir -p /docker/nginx-proxy/html 
+mkdir -p /docker/bin
+cd /docker/bin
+wget https://github.com/rancher/rancher-compose/releases/download/v0.12.5/rancher-compose-linux-amd64-v0.12.5.tar.gz
+tar zxvf rancher-compose-linux-amd64-v0.12.5.tar.gz
+mv rancher-compose-v0.12.5/rancher-compose .
+rm -rf rancher-compose-linux-amd64-v0.12.5.tar.gz
+rm -rf rancher-compose-v0.12.5
+
 cd /docker/git_clone/rancher-init/nginx
 docker-compose pull
 docker-compose up -d
 
-mkdir -p /docker/rancher-server/mysql
 cd /docker/git_clone/rancher-init/rancher
 docker-compose pull
 docker-compose up -d
