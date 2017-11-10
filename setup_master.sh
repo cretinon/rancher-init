@@ -10,6 +10,15 @@ mkdir -p /docker/nginx-proxy/ssl
 mkdir -p /docker/nginx-proxy/vhost.d
 mkdir -p /docker/nginx-proxy/html
 mkdir -p /docker/rancher-server/mysql
+mkdir -p /docker/share
+
+mkdir -p /glusterfs
+pvcreate -ff -y  /dev/sdb
+vgcreate glustervg /dev/sdb
+lvcreate -y glustervg  -n glusterlv1 -l 6399
+mkfs.ext4 /dev/glustervg/glusterlv1
+echo "/dev/glustervg/glusterlv1 /glusterfs ext4 defaults 0 0" >> /etc/fstab
+mount /glusterfs
 
 mkdir -p /docker/git_clone
 cd /docker/git_clone
