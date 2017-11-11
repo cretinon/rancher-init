@@ -6,6 +6,7 @@ chmod 0600 /swap
 swapon /swap
 
 apt-get update ; apt-get -y install curl git lsof lvm2 glusterfs-server; apt-get clean ; 
+
 curl -sSL https://get.docker.com | sh ; 
 
 curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
@@ -41,9 +42,7 @@ rm -rf rancher-compose-linux-amd64-v0.12.5.tar.gz
 rm -rf rancher-compose-v0.12.5
 
 cd /docker/git_clone/rancher-init/nginx
-docker-compose pull
-docker-compose up -d
+./start_nginx.sh
 
 cd /docker/git_clone/rancher-init/rancher
-docker-compose pull
-docker-compose up -d
+./start_rancher.sh
