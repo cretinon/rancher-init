@@ -28,8 +28,8 @@ echo "/dev/datavg/locallv1 /docker_local ext4 defaults 0 0" >> /etc/fstab
 mount /docker_local
 
 mkdir /docker
-gluster volume create docker replica 2 transport tcp vps3.cretinon.fr:/glusterfs/$VOL vps4.cretinon.fr:/glusterfs/$VOL force
-while [ $? -eq 1 ]; do sleep 10 ; gluster volume create docker replica 2 transport tcp vps3.cretinon.fr:/glusterfs/$VOL vps4.cretinon.fr:/glusterfs/$VOL force ; done
+gluster volume create docker replica 2 transport tcp vps3.cretinon.fr:/glusterfs/docker vps4.cretinon.fr:/glusterfs/docker force
+while [ $? -eq 1 ]; do sleep 10 ; gluster volume create docker replica 2 transport tcp vps3.cretinon.fr:/glusterfs/docker vps4.cretinon.fr:/glusterfs/docker force ; done
 gluster volume start docker
 echo "localhost:/docker /docker glusterfs defaults,_netdev 0 0" >> /etc/fstab
 mount /docker
