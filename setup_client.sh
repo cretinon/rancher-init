@@ -10,11 +10,16 @@ curl -sSL https://get.docker.com | sh ;
 
 mkdir -p /glusterfs
 pvcreate -ff -y  /dev/sdb
-vgcreate glustervg /dev/sdb
-lvcreate -y glustervg  -n glusterlv1 -l 6399
-mkfs.ext4 /dev/glustervg/glusterlv1
-echo "/dev/glustervg/glusterlv1 /glusterfs ext4 defaults 0 0" >> /etc/fstab
+vgcreate datavg /dev/sdb
+lvcreate -y datavg  -n glusterlv1 -l 500
+mkfs.ext4 /dev/datavg/glusterlv1
+echo "/dev/datavg/glusterlv1 /glusterfs ext4 defaults 0 0" >> /etc/fstab
 mount /glusterfs
+mkdir -p /docker_local
+lvcreate -y datavg  -n locallv1 -l 500
+mkfs.ext4 /dev/datavg/locallv1
+echo "/dev/datavg/locallv1 /docker_local ext4 defaults 0 0" >> /etc/fstab
+mount /docker_local
 
 mkdir /docker
 gluster peer probe vps3.cretinon.fr
