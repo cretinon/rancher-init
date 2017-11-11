@@ -5,6 +5,8 @@ mkswap -c /swap 1024000
 chmod 0600 /swap
 swapon /swap
 
+dd if=/dev/zero of=/dev/sdb bs=1024 count=10
+
 apt-get update ; apt-get -y install curl git lsof lvm2 glusterfs-server; apt-get clean ; 
 
 curl -sSL https://get.docker.com | sh ; 
