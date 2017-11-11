@@ -42,7 +42,9 @@ rm -rf rancher-compose-linux-amd64-v0.12.5.tar.gz
 rm -rf rancher-compose-v0.12.5
 
 cd /docker/git_clone/rancher-init/nginx
+chmod +x start_nginx.sh
 ./start_nginx.sh
 
 cd /docker/git_clone/rancher-init/rancher
+chmod +x start_rancher.sh
 ./start_rancher.sh
