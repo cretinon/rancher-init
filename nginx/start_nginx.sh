@@ -13,7 +13,7 @@ docker service create \
     portainer/portainer \
     -H unix:///var/run/docker.sock
 
-docker network create reverse-proxy
+docker network create nginx-proxy
 
 mkdir -p /docker/nginx/conf.d
 mkdir -p /docker/nginx/vhost.d
