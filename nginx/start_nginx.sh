@@ -2,7 +2,7 @@
 
 docker swarm init
 
-mkdir /docker/portainer/data
+mkdir -p /docker/portainer/data
 
 docker service create \
     --name portainer \
