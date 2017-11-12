@@ -1,28 +1,39 @@
-db:
-  image: mysql:5.7
-  labels:
-    io.rancher.container.pull_image: always
-    io.rancher.scheduler.affinity:host_label_soft: io.blackcreeper.com.server=mysql
-  volumes:
-    - "/docker/wordpress/mysql:/var/lib/mysql"
-  restart: always
-  environment:
-    MYSQL_ROOT_PASSWORD: wordpress
-    MYSQL_DATABASE: wordpress
-    MYSQL_USER: wordpress
-    MYSQL_PASSWORD: wordpress
-wordpress:
-  labels:
-    io.rancher.container.pull_image: always
-    io.rancher.scheduler.affinity:host_label_soft: io.blackcreeper.com.server=wordpress
-  image: wordpress:latest
-  links:
-    - 'db:'
-  restart: always
-  environment:
-    WORDPRESS_DB_HOST: db:3306
-    WORDPRESS_DB_PASSWORD: wordpress
-    LETSENCRYPT_EMAIL: jacques@cretinon.fr
-    LETSENCRYPT_HOST: wordpress.cretinon.fr
-    VIRTUAL_HOST: wordpress.cretinon.fr
-    VIRTUAL_PORT: '8090'
+version: '3.1'
+ 
+services:
+  wordpress:
+    image: wordpress
+    ports:
+      - 8099:80
+    networks:
+      - wordpress-net
+      - ng-net 
+    environment:
+      WORDPRESS_DB_HOST: wordpress_db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: db_parola
+      VIRTUAL_HOST: wordpress.cretinon.fr
+      VIRTUAL_PORT: 8099 
+#      VIRTUAL_PROTO: https
+      LETSENCRYPT_HOST: wordpress.cretinon.fr
+      LETSENCRYPT_EMAIL: jacques@cretinon.fr
+
+  wordpress_db:
+    image: mariadb
+    volumes:
+      - /docker/wordpress/db_data:/var/lib/mysql
+      - /docker/wordpress/html:/var/www/html
+    networks:
+      - wordpress-net
+    environment:
+      MYSQL_ROOT_PASSWORD: db_root_parola
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: db_parola
+ 
+networks:
+  wordpress-net:
+      external: true
+  ng-net:
+      external: true
