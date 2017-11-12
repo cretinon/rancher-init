@@ -3,22 +3,22 @@
 docker swarm init
 
 mkdir -p /docker/portainer/data
+docker stack deploy portainer --compose-file portainer.yml
 
-docker service create \
-    --name portainer \
-    --publish 9000:9000 \
-    --constraint 'node.role == manager' \
-    --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-    --mount type=bind,src=/docker/portainer/data,dst=/data \
-    portainer/portainer \
-    -H unix:///var/run/docker.sock
+#docker service create \
+#    --name portainer \
+#    --publish 9000:9000 \
+#    --constraint 'node.role == manager' \
+#    --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+#    --mount type=bind,src=/docker/portainer/data,dst=/data \
+#    portainer/portainer \
+#    -H unix:///var/run/docker.sock
 
-docker network create nginx-proxy
-
+docker network create -d overlay ng-net
 mkdir -p /docker/nginx/conf.d
 mkdir -p /docker/nginx/vhost.d
 mkdir -p /docker/nginx/html
-mkdir -p /docker/nginx-proxy/ssl
+mkdir -p /docker/nginx/certs
 
 docker stack deploy nginx --compose-file docker-compose.yml
 
