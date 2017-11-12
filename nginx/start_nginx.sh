@@ -15,10 +15,10 @@ docker service create \
 
 docker network create reverse-proxy
 
-mkdir /docker/nginx/conf.d
-mkdir /docker/nginx/vhost.d
-mkdir /docker/nginx/html
-mkdir /docker/nginx-proxy/ssl
+mkdir -p /docker/nginx/conf.d
+mkdir -p /docker/nginx/vhost.d
+mkdir -p /docker/nginx/html
+mkdir -p /docker/nginx-proxy/ssl
 
 docker-compose up
 
