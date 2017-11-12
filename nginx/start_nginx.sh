@@ -20,7 +20,7 @@ mkdir -p /docker/nginx/vhost.d
 mkdir -p /docker/nginx/html
 mkdir -p /docker/nginx-proxy/ssl
 
-docker-compose up
+docker stack deploy nginx --compose-file docker-compose.yml
 
 #docker run -d -p 80:80 -p 443:443 \
 #  --name nginx \
